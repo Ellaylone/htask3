@@ -1,0 +1,35 @@
+{
+  "name": "htask3",
+  "version": "1.0.0",
+  "description": "shri task 3",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ellaylone/htask3.git"
+  },
+  "author": "Ellaylone",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ellaylone/htask3/issues"
+  },
+  "homepage": "https://github.com/Ellaylone/htask3#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "browser-sync": "^2.13.0",
+    "cssnano": "^3.7.3",
+    "gulp": "^3.9.1",
+    "gulp-eslint": "^3.0.1",
+    "gulp-image-optimization": "^0.1.3",
+    "gulp-postcss": "^6.1.1",
+    "gulp-pug": "^3.0.3",
+    "gulp-watch": "^4.3.8",
+    "postcss": "^5.1.0",
+    "postcss-cssnext": "^2.7.0",
+    "pug": "^2.0.0-beta3",
+    "stylelint": "^7.0.2",
+    "stylelint-config-standard": "^11.0.0"
+  }
+}
