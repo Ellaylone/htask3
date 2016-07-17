@@ -1,0 +1,11 @@
+@import "normalize-css";
+@custom-media --xs-viewport (width <= 320px);
+@custom-media --sm-viewport (width <= 768px);
+@custom-media --md-viewport (width <= 1000px);
+
+.content {
+    margin: 0 auto;
+    min-width: 320px;
+    max-width: 960px;
+}
+

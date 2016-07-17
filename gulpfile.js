@@ -4,9 +4,11 @@ const gulp = require('gulp');
 const watch = require('gulp-watch');
 const postcss = require('gulp-postcss');
 const imageOp = require('gulp-image-optimization');
-const ejs = require('gulp-ejs');
 const pug = require('gulp-pug');
 const gutil = require('gulp-util');
+const uglify = require('gulp-uglify');
+const sourcemaps = require('gulp-sourcemaps');
+const clean = require('gulp-clean');
 
 const browserSync = require('browser-sync');
 const reload = browserSync.reload;
@@ -15,11 +17,14 @@ const cssNext = require('postcss-cssnext');
 const cssNano = require('cssnano');
 const size = require('postcss-size');
 const cssMqpacker = require('css-mqpacker');
+const browserReporter = require('postcss-browser-reporter');
+const stylelint = require('stylelint');
+const postcssImport = require('postcss-import');
 
-var path = {
+let path = {
     src: {
         html: 'src/pug/*.pug',
-        js: 'src/ejs/*.ejs',
+        js: 'src/js/*.js',
         img: 'src/img/*.*',
         css: 'src/pcss/*.*'
     },
@@ -31,7 +36,7 @@ var path = {
     }
 };
 
-var config = {
+let config = {
     server: {
         baseDir: './build'
     },
@@ -42,7 +47,7 @@ var config = {
 };
 
 //NOTE build tasks
-gulp.task('html:build', () => {
+gulp.task('html:build', ['html:clean'], () => {
     gulp.src(path.src.html)
         .pipe(pug({
             pretty: false
@@ -52,14 +57,16 @@ gulp.task('html:build', () => {
         .pipe(reload({stream: true}));
 });
 
-gulp.task('js:build', () => {
+gulp.task('js:build', ['js:clean'], () => {
     gulp.src(path.src.js)
-        .pipe(ejs())
+        .pipe(sourcemaps.init())
+        .pipe(uglify())
+        .pipe(sourcemaps.write())
         .on('error', gutil.log)
         .pipe(gulp.dest(path.build.js));
 });
 
-gulp.task('img:build', () => {
+gulp.task('img:build', ['img:clean'], () => {
     gulp.src(path.src.img)
         .pipe(imageOp({
             optimizationLevel: 5,
@@ -71,20 +78,45 @@ gulp.task('img:build', () => {
         .pipe(reload({stream: true}))
 });
 
-gulp.task('css:build', () => {
+gulp.task('css:build', ['css:clean'], () => {
     const processors = [
+        stylelint('./.stylelintrc'),
+        postcssImport,
         size,
-        cssNext,
-        cssMqpacker,
-        cssNano({
-            autoprefixer: ['ie >= 10', '> 2% in RU']
+        cssNext({
+            warnForDuplicates: false
         }),
+        cssMqpacker,
+        cssNano,
+        browserReporter
     ];
     return gulp.src(path.src.css)
+        .pipe(sourcemaps.init())
         .pipe(postcss(processors))
+        .pipe(sourcemaps.write())
         .on('error', gutil.log)
         .pipe(gulp.dest(path.build.css))
         .pipe(reload({stream: true}));
+});
+
+gulp.task('html:clean', () => {
+    return gulp.src(path.build.html + '*.html', {read: false})
+        .pipe(clean());
+});
+
+gulp.task('js:clean', () => {
+    return gulp.src(path.build.js, {read: false})
+        .pipe(clean());
+});
+
+gulp.task('img:clean', () => {
+    return gulp.src(path.build.img, {read: false})
+        .pipe(clean());
+});
+
+gulp.task('css:clean', () => {
+    return gulp.src(path.build.css, {read: false})
+        .pipe(clean());
 });
 
 gulp.task('build', [
