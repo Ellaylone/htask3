@@ -30,7 +30,8 @@ let path = {
         img: 'src/img/*.*',
         css: 'src/pcss/*.*',
         video: 'src/video/*.*',
-        audio: 'src/audio/*.*'
+        audio: 'src/audio/*.*',
+        sub: 'src/sub/*.*'
     },
     build: {
         html: 'build/',
@@ -38,7 +39,8 @@ let path = {
         img: 'build/img',
         css: 'build/css/',
         video: 'build/video/',
-        audio: 'build/audio/'
+        audio: 'build/audio/',
+        sub: 'build/sub/'
     }
 };
 
@@ -120,6 +122,12 @@ gulp.task('audio:build', ['audio:clean'], () => {
         .pipe(reload({stream: true}));
 });
 
+gulp.task('sub:build', ['audio:clean'], () => {
+    return gulp.src(path.src.sub)
+        .pipe(gulp.dest(path.build.sub))
+        .pipe(reload({stream: true}));
+});
+
 gulp.task('html:clean', () => {
     return gulp.src(path.build.html + '*.html', {read: false})
         .pipe(clean());
@@ -150,13 +158,19 @@ gulp.task('audio:clean', () => {
         .pipe(clean());
 });
 
+gulp.task('sub:clean', () => {
+    return gulp.src(path.build.sub, {read: false})
+        .pipe(clean());
+});
+
 gulp.task('build', [
     'html:build',
     'js:build',
     'img:build',
     'css:build',
     'video:build',
-    'audio:build'
+    'audio:build',
+    'sub:build'
 ]);
 
 gulp.task('webserver', () => {

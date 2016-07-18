@@ -22,6 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     video.pause();
                     audio.pause();
                     stopDrawLoop();
+                    controlElements = [];
+                    createStartElement();
                 } else {
                     video.play();
                     audio.play();
@@ -31,6 +33,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 }, false);
+
+function createStartElement () {
+    controlElements = [{
+        type: 'start',
+        top: 0,
+        left: 0,
+        right: canvas.width,
+        bottom: canvas.width - 20
+    }];
+}
 
 function createPauseElement () {
     controlElements = [{
@@ -188,3 +200,48 @@ function drawLoop () {
     drawSkratches(ctx);
 }
 
+function parseSrt(text) {
+    let timeConst = {
+        sec: 1000,
+        min: 60,
+        hr: 60
+    };
+    let temp = text.split('\n\n');
+
+    let result = temp.map((el) => {
+
+        let res = {};
+        let subtitle = el.split('\n');
+
+        // === Get subtitle's number ===
+        res.number = parseInt(subtitle[0]);
+
+        let time = subtitle[1].split(' --> ');
+
+        // === Convert start time to MS ===
+        let startTime = time[0].split(':');
+        let startTimeSec = parseInt(startTime[2].split(',').join(''));
+        let startTimeMin = parseInt(startTime[1]) * timeConst.min * timeConst.sec;
+        let startTimeHr = parseInt(startTime[0]) * timeConst.hr * timeConst.min * timeConst.sec;
+        startTime = startTimeSec + startTimeMin	+ startTimeHr;
+        res.startTime = startTime;
+
+        // === Convert end time to MS ===
+        let endTime = time[1].split(':');
+        let endTimeSec = parseInt(endTime[2].split(',').join(''));
+        let endTimeMin = parseInt(endTime[1]) * timeConst.min * timeConst.sec;
+        let endTimeHr = parseInt(endTime[0]) * timeConst.hr * timeConst.min * timeConst.sec;
+        endTime = endTimeSec + endTimeMin	+ endTimeHr;
+        res.endTime = endTime;
+
+        res.timeLength = endTime - startTime;
+
+        // === Join subtitle content ===
+        subtitle.splice(0, 2);
+        res.content = subtitle;
+
+        return res;
+    });
+
+    return result;
+}
