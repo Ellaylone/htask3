@@ -34,9 +34,11 @@ html(lang="en")
             
             .player
                 section
-                    video.player__video(width='700' height='400' controls autoplay)
+                    video.player__video(width='700' height='400' muted)
                         source(src='video/sherlock.mp4' type='video/mp4')
                         // source(src='https://cache-default01f.cdn.yandex.net/kp.cdn.yandex.net/502838/kinopoisk.ru-Sherlock-284167.mp4' type='video/mp4')
+                section
+                    audio.player__audio(src='audio/The_Entertainer_-_1902_-_By_Scott_Joplin.ogg')
                 section
                     canvas.player__canvas
         script(src='js/main.js' type='text/javascript')

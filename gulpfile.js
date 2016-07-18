@@ -29,14 +29,16 @@ let path = {
         js: 'src/js/*.js',
         img: 'src/img/*.*',
         css: 'src/pcss/*.*',
-        video: 'src/video/*.*'
+        video: 'src/video/*.*',
+        audio: 'src/audio/*.*'
     },
     build: {
         html: 'build/',
         js: 'build/js/',
         img: 'build/img',
         css: 'build/css/',
-        video: 'build/video/'
+        video: 'build/video/',
+        audio: 'build/audio/'
     }
 };
 
@@ -112,6 +114,12 @@ gulp.task('video:build', ['video:clean'], () => {
         .pipe(reload({stream: true}));
 });
 
+gulp.task('audio:build', ['audio:clean'], () => {
+    return gulp.src(path.src.audio)
+        .pipe(gulp.dest(path.build.audio))
+        .pipe(reload({stream: true}));
+});
+
 gulp.task('html:clean', () => {
     return gulp.src(path.build.html + '*.html', {read: false})
         .pipe(clean());
@@ -137,12 +145,18 @@ gulp.task('video:clean', () => {
         .pipe(clean());
 });
 
+gulp.task('audio:clean', () => {
+    return gulp.src(path.build.audio, {read: false})
+        .pipe(clean());
+});
+
 gulp.task('build', [
     'html:build',
     'js:build',
     'img:build',
     'css:build',
-    'video:build'
+    'video:build',
+    'audio:build'
 ]);
 
 gulp.task('webserver', () => {
@@ -162,6 +176,12 @@ gulp.task('watch', () => {
     });
     watch([path.src.css], (event, cb) => {
         gulp.start('css:build');
+    });
+    watch([path.src.video], (event, cb) => {
+        gulp.start('video:build');
+    });
+    watch([path.src.audio], (event, cb) => {
+        gulp.start('audio:build');
     });
 });
 
