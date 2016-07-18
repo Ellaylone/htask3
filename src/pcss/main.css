@@ -3,9 +3,70 @@
 @custom-media --sm-viewport (width <= 768px);
 @custom-media --md-viewport (width <= 1000px);
 
+html,
+body {
+    height: 100%;
+    background-color: #d8d8d8;
+}
+
+.hidden {
+    display: none;
+}
+
 .content {
+    height: 100%;
     margin: 0 auto;
     min-width: 320px;
     max-width: 960px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
 }
 
+.links {
+    width: 400px;
+}
+
+.links__header {
+    background: url(../img/logo.svg) right top no-repeat;
+}
+
+.links__wrap {
+    width: 80%;
+    margin: 0 10%;
+}
+
+.links-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.links-form__input {
+    width: calc(100% - 20px);
+    line-height: 2em;
+    padding: 0 10px;
+    margin: 0 0 20px;
+    box-shadow: 0 0 5px rgba(128, 128, 128, 0.5);
+    border: none;
+    border-bottom: 1px solid grey;
+}
+
+.links-form__button {
+    color: #000;
+    background: #ffdf3a;
+    border-radius: 5px;
+    border: none;
+    padding: 10px 20px;
+    box-shadow: 0 1px 0 grey;
+}
+
+.links-form__submit {
+    align-self: flex-end;
+}
+
+.player__video {
+    position: absolute;
+    z-index: -1;
+}

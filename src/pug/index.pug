@@ -5,12 +5,41 @@ html(lang="en")
         link(href='css/main.css' rel='stylesheet')
     body
         .content
-            .links
-                header
+            .links.hidden
+                header.links__header
                     h1 Киноглушитель
+                section.links__wrap
+                    form(class='links-form')
+                        input(
+                        type='text'
+                        name='video'
+                        class='links-form__input links-form__video'
+                        placeholder='Ссылка на видео'
+                        )
+                        input(
+                        type='text'
+                        name='sub'
+                        class='links-form__input links-form__sub'
+                        placeholder='Ссылка на субтитры'
+                        )
+                        input(
+                        type='text'
+                        name='audio'
+                        class='links-form__input links-form__audio'
+                        placeholder='Ссылка на саундтрек'
+                        )
+                        button(
+                        class='links-form__button links-form__submit'
+                        ) Заглушить
+            
+            .player
                 section
-                    form
-                        input(type=text)
-                        input
-                        input
-                        button
+                    video.player__video(width='700' height='400' controls autoplay)
+                        source(src='video/sherlock.mp4' type='video/mp4')
+                        // source(src='https://cache-default01f.cdn.yandex.net/kp.cdn.yandex.net/502838/kinopoisk.ru-Sherlock-284167.mp4' type='video/mp4')
+                section
+                    canvas.player__canvas
+        script(src='js/main.js' type='text/javascript')
+        
+        
+        

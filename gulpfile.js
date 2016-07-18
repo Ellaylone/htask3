@@ -9,6 +9,8 @@ const gutil = require('gulp-util');
 const uglify = require('gulp-uglify');
 const sourcemaps = require('gulp-sourcemaps');
 const clean = require('gulp-clean');
+const babel = require('gulp-babel');
+const concat = require('gulp-concat');
 
 const browserSync = require('browser-sync');
 const reload = browserSync.reload;
@@ -26,13 +28,15 @@ let path = {
         html: 'src/pug/*.pug',
         js: 'src/js/*.js',
         img: 'src/img/*.*',
-        css: 'src/pcss/*.*'
+        css: 'src/pcss/*.*',
+        video: 'src/video/*.*'
     },
     build: {
         html: 'build/',
         js: 'build/js/',
         img: 'build/img',
-        css: 'build/css/'
+        css: 'build/css/',
+        video: 'build/video/'
     }
 };
 
@@ -48,7 +52,7 @@ let config = {
 
 //NOTE build tasks
 gulp.task('html:build', ['html:clean'], () => {
-    gulp.src(path.src.html)
+    return gulp.src(path.src.html)
         .pipe(pug({
             pretty: false
         }))
@@ -58,16 +62,19 @@ gulp.task('html:build', ['html:clean'], () => {
 });
 
 gulp.task('js:build', ['js:clean'], () => {
-    gulp.src(path.src.js)
+    return gulp.src(path.src.js)
         .pipe(sourcemaps.init())
+        .pipe(babel())
+        .pipe(concat('main.js'))
         .pipe(uglify())
         .pipe(sourcemaps.write())
         .on('error', gutil.log)
-        .pipe(gulp.dest(path.build.js));
+        .pipe(gulp.dest(path.build.js))
+        .pipe(reload({stream: true}));
 });
 
 gulp.task('img:build', ['img:clean'], () => {
-    gulp.src(path.src.img)
+    return gulp.src(path.src.img)
         .pipe(imageOp({
             optimizationLevel: 5,
             progressive: true,
@@ -75,7 +82,7 @@ gulp.task('img:build', ['img:clean'], () => {
         }))
         .on('error', gutil.log)
         .pipe(gulp.dest(path.build.img))
-        .pipe(reload({stream: true}))
+        .pipe(reload({stream: true}));
 });
 
 gulp.task('css:build', ['css:clean'], () => {
@@ -99,6 +106,12 @@ gulp.task('css:build', ['css:clean'], () => {
         .pipe(reload({stream: true}));
 });
 
+gulp.task('video:build', ['video:clean'], () => {
+    return gulp.src(path.src.video)
+        .pipe(gulp.dest(path.build.video))
+        .pipe(reload({stream: true}));
+});
+
 gulp.task('html:clean', () => {
     return gulp.src(path.build.html + '*.html', {read: false})
         .pipe(clean());
@@ -119,11 +132,17 @@ gulp.task('css:clean', () => {
         .pipe(clean());
 });
 
+gulp.task('video:clean', () => {
+    return gulp.src(path.build.video, {read: false})
+        .pipe(clean());
+});
+
 gulp.task('build', [
     'html:build',
     'js:build',
     'img:build',
-    'css:build'
+    'css:build',
+    'video:build'
 ]);
 
 gulp.task('webserver', () => {
