@@ -9,24 +9,45 @@ const controlRectHeight = 50;
 const controlRectWidth = 20;
 
 
-function grayscale (imageData) {
+function grayAndGrain (imageData) {
     // получаем одномерный массив, описывающий все пиксели изображения
-    var pixels = imageData.data;
+    let pixels = imageData.data;
+    let value;
 
     // циклически преобразуем массив, изменяя значения красного, зеленого и синего каналов
-    for (var i = 0; i < pixels.length; i += 4) {
-        var r = pixels[i];
-        var g = pixels[i+1];
-        var b = pixels[i+2];
+    for (let i = 0; i < pixels.length; i += 4) {
+        value = Math.random() + 1;
+        let r = pixels[i];
+        let g = pixels[i+1];
+        let b = pixels[i+2];
         // CIE luminance for the RGB
         // The human eye is bad at seeing red and blue, so we de-emphasize them.
-        var v = 0.2126*r + 0.7152*g + 0.0722*b;
+        let v = 0.2126*r + 0.7152*g + 0.0722*b;
         pixels[i] = pixels[i+1] = pixels[i+2] = v;
+        pixels[i] *= value;
+        pixels[i+1] *= value;
+        pixels[i+2] *= value;
     }
 
     return imageData;
-    
 };
+
+function skratch(ctx) {
+    ctx.beginPath();
+    let startPoint = {
+        x: Math.floor(Math.random() * (canvas.width - 1)),
+        y: Math.floor(Math.random() * (canvas.height - 1))
+    };
+
+    let endPoint = {
+        x: startPoint.x,
+        y: Math.floor(Math.random() * (canvas.height - startPoint.y))
+    };
+
+    ctx.moveTo(startPoint.x, startPoint.y);
+    ctx.lineTo(endPoint.x, endPoint.y);
+    ctx.stroke();
+}
 
 video.addEventListener('play', () => {
     video.width = canvas.width = video.offsetWidth;
@@ -37,10 +58,20 @@ video.addEventListener('play', () => {
         ctx.drawImage(video, 0, 0, video.width, video.height);
         
         let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        let imageDataFiltered = grayscale(imageData);
+        let imageDataFiltered = grayAndGrain(imageData);
         ctx.putImageData(imageDataFiltered, 0, 0);
 
-        ctx.fillStyle = 'white';
+        ctx.fillStyle = `rgb(255, 255, 255)`;
+        let strokeOpacity = Math.random() * (0.8 - 0.2);
+        ctx.strokeStyle = `rgba(255, 255, 255, ${strokeOpacity})`;
+
+        let amountOfSkratches = Math.floor(Math.random() * (100 - 0 + 1) + 0);
+        amountOfSkratches -= 98;
+        if(amountOfSkratches > 0){
+            for(let i = 0; i < amountOfSkratches; i++){
+                skratch(ctx);
+            }
+        }
         
         ctx.beginPath();
         ctx.moveTo(10, canvas.height - controlBottomPoint);
