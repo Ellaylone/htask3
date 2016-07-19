@@ -1,12 +1,14 @@
 const linksForm = document.querySelector('.links-form');
 const linksEl = document.querySelector('.links');
 const playerEl = document.querySelector('.player');
+const submitEl = document.querySelector('.links-form__submit');
 
 let isSubtitleShown = false;
 let subtitles;
 let subTimeout;
 
 linksForm.addEventListener('change', _onInputChange, false);
+submitEl.addEventListener('click', checkInputs, false);
 
 function _onInputChange (e) {
     var reader = new FileReader();
@@ -33,11 +35,10 @@ function _onInputChange (e) {
     default:
         break;
     }
-
-    checkInputs();
 }
 
-function checkInputs () {
+function checkInputs (e) {
+    e.preventDefault();
     let inputs = document.querySelectorAll('.links-form__input');
     let validation = true;
 
