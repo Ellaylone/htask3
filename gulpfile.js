@@ -28,19 +28,13 @@ let path = {
         html: 'src/pug/*.pug',
         js: 'src/js/*.js',
         img: 'src/img/*.*',
-        css: 'src/pcss/*.*',
-        video: 'src/video/*.*',
-        audio: 'src/audio/*.*',
-        sub: 'src/sub/*.*'
+        css: 'src/pcss/*.*'
     },
     build: {
         html: 'build/',
         js: 'build/js/',
         img: 'build/img',
-        css: 'build/css/',
-        video: 'build/video/',
-        audio: 'build/audio/',
-        sub: 'build/sub/'
+        css: 'build/css/'
     }
 };
 
@@ -110,24 +104,6 @@ gulp.task('css:build', ['css:clean'], () => {
         .pipe(reload({stream: true}));
 });
 
-gulp.task('video:build', ['video:clean'], () => {
-    return gulp.src(path.src.video)
-        .pipe(gulp.dest(path.build.video))
-        .pipe(reload({stream: true}));
-});
-
-gulp.task('audio:build', ['audio:clean'], () => {
-    return gulp.src(path.src.audio)
-        .pipe(gulp.dest(path.build.audio))
-        .pipe(reload({stream: true}));
-});
-
-gulp.task('sub:build', ['audio:clean'], () => {
-    return gulp.src(path.src.sub)
-        .pipe(gulp.dest(path.build.sub))
-        .pipe(reload({stream: true}));
-});
-
 gulp.task('html:clean', () => {
     return gulp.src(path.build.html + '*.html', {read: false})
         .pipe(clean());
@@ -148,29 +124,11 @@ gulp.task('css:clean', () => {
         .pipe(clean());
 });
 
-gulp.task('video:clean', () => {
-    return gulp.src(path.build.video, {read: false})
-        .pipe(clean());
-});
-
-gulp.task('audio:clean', () => {
-    return gulp.src(path.build.audio, {read: false})
-        .pipe(clean());
-});
-
-gulp.task('sub:clean', () => {
-    return gulp.src(path.build.sub, {read: false})
-        .pipe(clean());
-});
-
 gulp.task('build', [
     'html:build',
     'js:build',
     'img:build',
-    'css:build',
-    'video:build',
-    'audio:build',
-    'sub:build'
+    'css:build'
 ]);
 
 gulp.task('webserver', () => {
@@ -190,12 +148,6 @@ gulp.task('watch', () => {
     });
     watch([path.src.css], (event, cb) => {
         gulp.start('css:build');
-    });
-    watch([path.src.video], (event, cb) => {
-        gulp.start('video:build');
-    });
-    watch([path.src.audio], (event, cb) => {
-        gulp.start('audio:build');
     });
 });
 

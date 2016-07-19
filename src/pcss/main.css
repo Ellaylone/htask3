@@ -1,7 +1,5 @@
 @import "normalize-css";
-@custom-media --xs-viewport (width <= 320px);
-@custom-media --sm-viewport (width <= 768px);
-@custom-media --md-viewport (width <= 1000px);
+@import url(https://fonts.googleapis.com/css?family=Oranienbaum&subset=latin,cyrillic);
 
 html,
 body {
@@ -45,11 +43,8 @@ body {
 
 .links-form__input {
     width: calc(100% - 20px);
-    line-height: 2em;
-    padding: 0 10px;
+    padding: 0 0 10px;
     margin: 0 0 20px;
-    box-shadow: 0 0 5px rgba(128, 128, 128, 0.5);
-    border: none;
     border-bottom: 1px solid grey;
 }
 
