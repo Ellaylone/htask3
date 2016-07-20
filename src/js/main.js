@@ -1,20 +1,34 @@
-let video, canvas, audio;
+// main
+const canvasBgColor = '#000',
+      canvasControlsColor = '#fff',
+      canvasFontColor = '#fff',
+      canvasFontSize = 24,
+      canvasLineHeight = 12;
 
-const controlBottomPoint = 10;
-const controlTopPoint = 60;
-const controlTrianglePoint = 35;
-const controlRectHeight = 50;
-const controlRectWidth = 20;
+const linksForm = document.querySelector('.links-form'),
+      linksEl = document.querySelector('.links'),
+      playerEl = document.querySelector('.player'),
+      submitEl = document.querySelector('.links-form__submit');
+
 const fps = 1000 / 60;
 
-let videoWidth,
-    videoHeight,
-    videoSizeRatio;
+let video, canvas, audio;
+canvas = document.querySelector('.player__canvas');
 
-let controlElements = [];
+let controlElements = [],
+    reader = new FileReader(),
+    srt;
 
-let reader = new FileReader();
-let srt;
+let videoWidth = 700,
+    videoHeight = 400;
+
+let isSubtitleShown = false,
+    subtitles,
+    subTimeout,
+    subtitleIndex = 0;
+
+let ctx = canvas.getContext('2d');
+let loopId;
 
 
 function showPlayer () {
@@ -34,23 +48,21 @@ function initCanvas () {
                 if(el.type == 'pause'){
                     if(!isSubtitleShown){
                         video.pause();
-                        audio.pause();
                         stopDrawLoop();
                     } else {
                         stopSubTimeout();
-                        audio.pause();
                     }
+                    audio.pause();
                     controlElements = [];
                     createStartElement();
                 } else {
                     if(!isSubtitleShown) {
                         video.play();
-                        audio.play();
-                        createPauseElement();
                     } else {
                         startSubTimeout();
-                        audio.play();
                     }
+                    audio.play();
+                    createPauseElement();   
                 }
             }
         });
@@ -63,7 +75,7 @@ function createStartElement () {
         top: 0,
         left: 0,
         right: canvas.width,
-        bottom: canvas.width - 20
+        bottom: canvas.height
     }];
 }
 
@@ -73,7 +85,7 @@ function createPauseElement () {
         top: 0,
         left: 0,
         right: canvas.width,
-        bottom: canvas.width - 20
+        bottom: canvas.height
     }];
 }
 
@@ -81,6 +93,6 @@ function canvasStartState () {
     video.width = canvas.width = video.offsetWidth;
     video.height = canvas.height = video.offsetHeight;
     let ctx = canvas.getContext('2d');
-    drawBackground(ctx, 'black');
-    drawCenterPlayButton(ctx, 'white');
+    drawBackground(ctx, canvasBgColor);
+    drawCenterPlayButton(ctx, canvasControlsColor);
 }

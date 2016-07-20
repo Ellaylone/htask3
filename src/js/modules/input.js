@@ -1,12 +1,3 @@
-const linksForm = document.querySelector('.links-form');
-const linksEl = document.querySelector('.links');
-const playerEl = document.querySelector('.player');
-const submitEl = document.querySelector('.links-form__submit');
-
-let isSubtitleShown = false;
-let subtitles;
-let subTimeout;
-
 linksForm.addEventListener('change', _onInputChange, false);
 submitEl.addEventListener('click', checkInputs, false);
 
@@ -59,8 +50,8 @@ function createVideo (src) {
     video.src = src;
     video.defaultMuted = true;
     video.classList.add('player__video');
-    video.width = 700;
-    video.height = 400;
+    video.width = videoWidth;
+    video.height = videoHeight;
     
     document.querySelector('.hidden-elements').appendChild(video);
 

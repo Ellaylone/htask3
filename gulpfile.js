@@ -26,7 +26,7 @@ const postcssImport = require('postcss-import');
 let path = {
     src: {
         html: 'src/pug/*.pug',
-        js: 'src/js/*.js',
+        js: 'src/js/**/*.js',
         img: 'src/img/*.*',
         css: 'src/pcss/*.*'
     },
@@ -60,7 +60,10 @@ gulp.task('html:build', ['html:clean'], () => {
 });
 
 gulp.task('js:build', ['js:clean'], () => {
-    return gulp.src(path.src.js)
+    return gulp.src([
+            'src/js/main.js',
+            'src/js/modules/*.*'
+        ])
         .pipe(sourcemaps.init())
         .pipe(babel())
         .pipe(concat('main.js'))

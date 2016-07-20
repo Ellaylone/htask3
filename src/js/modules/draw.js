@@ -62,13 +62,10 @@ function drawCenterPlayButton (ctx, color) {
 }
 
 function drawSkratches () {
-    // переменная прозрачность царапин
     let strokeOpacity = Math.random() * (0.8 - 0.2);
     ctx.strokeStyle = `rgba(255, 255, 255, ${strokeOpacity})`;
 
-    // (max - min + 1) //max and min included
     let amountOfSkratches = Math.floor(Math.random() * (100 - 0 + 1));
-    // царапины должны появляться редко
     amountOfSkratches -= 98;
     if(amountOfSkratches > 0){
         for(let i = 0; i < amountOfSkratches; i++){
