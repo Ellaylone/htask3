@@ -68,7 +68,7 @@ gulp.task('js:build', ['js:clean'], () => {
         .pipe(babel())
         .pipe(concat('main.js'))
         .pipe(uglify())
-        .pipe(sourcemaps.write())
+        .pipe(sourcemaps.write('.'))
         .on('error', gutil.log)
         .pipe(gulp.dest(path.build.js))
         .pipe(reload({stream: true}));
@@ -101,7 +101,7 @@ gulp.task('css:build', ['css:clean'], () => {
     return gulp.src(path.src.css)
         .pipe(sourcemaps.init())
         .pipe(postcss(processors))
-        .pipe(sourcemaps.write())
+        .pipe(sourcemaps.write('.'))
         .on('error', gutil.log)
         .pipe(gulp.dest(path.build.css))
         .pipe(reload({stream: true}));
