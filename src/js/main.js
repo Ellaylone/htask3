@@ -49,6 +49,7 @@ function initCanvas () {
                     if(!isSubtitleShown){
                         video.pause();
                         stopDrawLoop();
+                        drawCenterPlayButton(canvasControlsColor);
                     } else {
                         stopSubTimeout();
                     }
@@ -93,6 +94,6 @@ function canvasStartState () {
     video.width = canvas.width = video.offsetWidth;
     video.height = canvas.height = video.offsetHeight;
     let ctx = canvas.getContext('2d');
-    drawBackground(ctx, canvasBgColor);
-    drawCenterPlayButton(ctx, canvasControlsColor);
+    drawBackground(canvasBgColor);
+    drawCenterPlayButton(canvasControlsColor);
 }

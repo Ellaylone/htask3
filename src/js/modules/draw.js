@@ -19,12 +19,12 @@ function grayAndGrain (imageData) {
     return imageData;
 };
 
-function drawBackground (ctx, color) {
+function drawBackground (color) {
     ctx.fillStyle = color;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
 
-function drawCenterPlayButton (ctx, color) {
+function drawCenterPlayButton (color) {
     ctx.fillStyle = `${color}`;
     let triangle = {
         width: 35,
