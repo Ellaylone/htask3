@@ -1,3 +1,4 @@
+// делаем картинку черно белой и накладываем шум
 function grayAndGrain (imageData) {
     // получаем одномерный массив, описывающий все пиксели изображения
     let pixels = imageData.data;
@@ -31,6 +32,7 @@ function drawCenterPlayButton (color) {
         height: 50
     };
 
+    // координаты вершин отцентрированного треугольника
     triangle.points = {
         top: {
             x: (canvas.width - triangle.width) / 2,
@@ -63,8 +65,10 @@ function drawCenterPlayButton (color) {
 
 function drawSkratches () {
     let strokeOpacity = Math.random() * (0.8 - 0.2);
+    // белого цвета с рандомной прозрачностью
     ctx.strokeStyle = `rgba(255, 255, 255, ${strokeOpacity})`;
 
+    // рисуем царапины только если выпадает 99/100
     let amountOfSkratches = Math.floor(Math.random() * (100 - 0 + 1));
     amountOfSkratches -= 98;
     if(amountOfSkratches > 0){

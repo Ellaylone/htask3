@@ -55,13 +55,13 @@ function drawSub (sub) {
     ctx.fillStyle = 'black';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = 'white';
-    ctx.font = `1.5em Oranienbaum, serif`;
+    ctx.font = `${canvasFontSize}px Oranienbaum, serif`;
 
-    let textHeight = (sub.content.length * 24) + ((sub.content.length - 1) * 12);
+    let textHeight = (sub.content.length * canvasFontSize) + ((sub.content.length - 1) * canvasLineHeight);
     let topPadding = (canvas.height - textHeight) / 2;
 
     sub.content.forEach((el, i) => {
-        let top = topPadding + (24 * i) + (12 * i);
+        let top = topPadding + (canvasFontSize * i) + (canvasLineHeight * i);
         let left = (canvas.width * 0.1);
         ctx.fillText(el, left, top);
     }); 
