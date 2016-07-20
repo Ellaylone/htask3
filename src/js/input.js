@@ -73,12 +73,13 @@ function createVideo (src) {
         if (typeof subtitles[subtitleIndex] !== 'undefined' && time >= subtitles[subtitleIndex].endTime) {
             if (!isSubtitleShown) {
                 showSub(subtitles[subtitleIndex]);
+                startSubTimeout();
             }
         }
     });
 
     video.addEventListener('ended', (e) => {
-        audio.stop();
+        audio.pause();
         stopDrawLoop();
     }, false);
 }
