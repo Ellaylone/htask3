@@ -81,13 +81,13 @@ function drawSkratches () {
 function skratch () {
     ctx.beginPath();
     let startPoint = {
-        x: Math.floor(Math.random() * (canvas.width - 1)),
-        y: Math.floor(Math.random() * (canvas.height - 1))
+        x: Math.floor(Math.random() * (canvas.width)),
+        y: Math.floor(Math.random() * (canvas.height))
     };
 
     let endPoint = {
-        x: startPoint.x,
-        y: Math.floor(Math.random() * (canvas.height - startPoint.y))
+        x: Math.floor(Math.random() * (canvas.height)),
+        y: Math.floor(Math.random() * (canvas.height))
     };
 
     ctx.moveTo(startPoint.x, startPoint.y);
