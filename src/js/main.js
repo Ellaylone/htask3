@@ -8,7 +8,11 @@ const canvasBgColor = '#000',
 const linksForm = document.querySelector('.links-form'),
       linksEl = document.querySelector('.links'),
       playerEl = document.querySelector('.player'),
-      submitEl = document.querySelector('.links-form__submit');
+      submitEl = document.querySelector('.links-form__submit'),
+
+      videoInput = document.querySelector('.links-form__video'),
+      audioInput = document.querySelector('.links-form__audio'),
+      subInput = document.querySelector('.links-form__sub');
 
 const fps = 1000 / 60;
 
@@ -19,8 +23,9 @@ let controlElements = [],
     reader = new FileReader(),
     srt;
 
-let videoWidth = 700,
-    videoHeight = 400;
+let videoWidth,
+    videoHeight,
+    videoSizeRatio;
 
 let isSubtitleShown = false,
     subtitles,
@@ -30,6 +35,11 @@ let isSubtitleShown = false,
 let ctx = canvas.getContext('2d');
 let loopId;
 
+let loaderStatus = false,
+    overlayEl = document.querySelector('.overlay'),
+    loaderWrapEl = document.querySelector('.loader-wrap');
+
+let corsProxy = 'http://cors.io/?u=';
 
 function showPlayer () {
     linksEl.classList.add('hidden');
@@ -96,4 +106,19 @@ function canvasStartState () {
     let ctx = canvas.getContext('2d');
     drawBackground(canvasBgColor);
     drawCenterPlayButton(canvasControlsColor);
+}
+
+function toggleLoader () {
+    switch (loaderStatus) {
+    case true:
+        loaderStatus = false;
+        overlayEl.classList.add('hidden');
+        loaderWrapEl.classList.add('hidden');
+        break;
+    default:
+        loaderStatus = true;
+        overlayEl.classList.remove('hidden');
+        loaderWrapEl.classList.remove('hidden');
+        break;
+    }
 }
