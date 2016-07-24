@@ -41,9 +41,13 @@ body {
     align-items: center;
 }
 
+.links-form__label {
+    width: 100%;
+}
+
 .links-form__input {
     width: calc(100% - 20px);
-    padding: 0 0 10px;
+    padding: 5px 10px;
     margin: 0 0 20px;
     border-bottom: 1px solid grey;
 }

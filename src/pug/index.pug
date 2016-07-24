@@ -10,23 +10,26 @@ html(lang="en")
                     h1 Киноглушитель
                 section.links__wrap
                     form(class='links-form')
-                        label Видео:
+                        label.links-form__label Видео:
                             input(
-                            type='file'
+                            type='text'
                             name='video'
                             class='links-form__input links-form__video'
+                            value='https://cache-default04d.cdn.yandex.net/kp.cdn.yandex.net/502838/kinopoisk.ru-Sherlock-284167.mp4'
                             )
-                        label Аудио:
+                        label.links-form__label Аудио:
                             input(
-                            type='file'
+                            type='text'
                             name='audio'
                             class='links-form__input links-form__audio'
+                            value='https://upload.wikimedia.org/wikipedia/commons/2/2c/The_Entertainer_-_1902_-_By_Scott_Joplin.ogg'
                             )
-                        label Субтитры:
+                        label.links-form__label Субтитры:
                             input(
-                            type='file'
+                            type='text'
                             name='sub'
                             class='links-form__input links-form__sub'
+                            value='https://raw.githubusercontent.com/shri-msk-2016/dz-multimedia/master/subs.srt'
                             )
                         
                         button(
