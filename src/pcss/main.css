@@ -69,3 +69,47 @@ body {
     position: absolute;
     z-index: -1;
 }
+
+.loader-wrap {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.loader {
+    font-size: 10px;
+    position: relative;
+    text-indent: -9999em;
+    border-top: 1.1em solid rgba(255, 255, 255, 0.5);
+    border-right: 1.1em solid rgba(255, 255, 255, 0.5);
+    border-bottom: 1.1em solid rgba(255, 255, 255, 0.5);
+    border-left: 1.1em solid #6eb9ef;
+    transform: translateZ(0);
+    animation: load8 1.1s infinite linear;
+}
+
+.loader,
+.loader::after {
+    border-radius: 50%;
+    width: 10em;
+    height: 10em;
+}
+
+@-webkit-keyframes load8 {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.overlay {
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    background: rgba(0, 0, 0, 0.5);
+    left: 0;
+    top: 0;
+}
