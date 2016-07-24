@@ -26,15 +26,17 @@ const postcssImport = require('postcss-import');
 let path = {
     src: {
         html: 'src/pug/*.pug',
-        js: 'src/js/**/*.js',
+        js: 'src/js/',
         img: 'src/img/*.*',
-        css: 'src/pcss/*.*'
+        css: 'src/pcss/**/*.*',
+        fonts: 'src/fonts/*.*'
     },
     build: {
         html: 'build/',
         js: 'build/js/',
         img: 'build/img',
-        css: 'build/css/'
+        css: 'build/css/',
+        fonts: 'build/fonts'
     }
 };
 
@@ -61,8 +63,8 @@ gulp.task('html:build', ['html:clean'], () => {
 
 gulp.task('js:build', ['js:clean'], () => {
     return gulp.src([
-            'src/js/main.js',
-            'src/js/modules/*.*'
+            `${path.src.js}main.js`,
+            `${path.src.js}\/modules\/*.js`
         ])
         .pipe(sourcemaps.init())
         .pipe(babel())
@@ -98,7 +100,8 @@ gulp.task('css:build', ['css:clean'], () => {
         cssNano,
         browserReporter
     ];
-    return gulp.src(path.src.css)
+   
+    gulp.src(path.src.css)
         .pipe(sourcemaps.init())
         .pipe(postcss(processors))
         .pipe(sourcemaps.write('.'))
@@ -107,6 +110,13 @@ gulp.task('css:build', ['css:clean'], () => {
         .pipe(reload({stream: true}));
 });
 
+gulp.task('fonts:build', ['fonts:clean'], () => {
+    return gulp.src(path.src.fonts) 
+        .pipe(gulp.dest(path.build.fonts))
+        .pipe(reload({stream: true}));
+});
+
+//NOTE clear tasks
 gulp.task('html:clean', () => {
     return gulp.src(path.build.html + '*.html', {read: false})
         .pipe(clean());
@@ -127,11 +137,17 @@ gulp.task('css:clean', () => {
         .pipe(clean());
 });
 
+gulp.task('fonts:clean', () => {
+    return gulp.src(path.build.fonts, {read: false})
+        .pipe(clean());
+});
+
 gulp.task('build', [
     'html:build',
     'js:build',
     'img:build',
-    'css:build'
+    'css:build',
+    'fonts:build'
 ]);
 
 gulp.task('webserver', () => {
