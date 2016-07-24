@@ -1,4 +1,5 @@
 @import "normalize-css";
+@import "bootstrap";
 @import url(https://fonts.googleapis.com/css?family=Oranienbaum&subset=latin,cyrillic);
 
 html,
@@ -23,11 +24,12 @@ body {
 }
 
 .links {
-    width: 400px;
+    width: 100%;
+    max-width: 400px;
 }
 
 .links__header {
-    background: url(../img/logo.svg) right top no-repeat;
+    text-align: center;
 }
 
 .links__wrap {
@@ -46,7 +48,7 @@ body {
 }
 
 .links-form__input {
-    width: calc(100% - 20px);
+    width: 100%;
     padding: 5px 10px;
     margin: 0 0 20px;
     border-bottom: 1px solid grey;
@@ -59,6 +61,12 @@ body {
     border: none;
     padding: 10px 20px;
     box-shadow: 0 1px 0 grey;
+}
+
+.links-form__button:hover,
+.links-form__button:active,
+.links-form__button:focus {
+    background: #f9d726 !important;
 }
 
 .links-form__submit {

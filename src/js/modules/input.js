@@ -1,4 +1,11 @@
 linksForm.addEventListener('submit', _onLinksFormSubmit, false);
+linksFormInputs.forEach((input) => {
+        input.addEventListener('focus', _onInputFocus, false);
+});
+
+function _onInputFocus (e) {
+    e.target.setSelectionRange(0, e.target.value.length);
+}
 
 function _onLinksFormSubmit (e) {
     e.preventDefault();
@@ -40,7 +47,6 @@ function createVideo (src) {
             video.src = corsProxy + src;
             video.defaultMuted = true;
             video.classList.add('player__video');
-            video.style.visibility = 'hidden';
 
             video.addEventListener('play', startDrawLoop, false);
 
@@ -63,11 +69,9 @@ function createVideo (src) {
 
             video.addEventListener('loadeddata', (e) => {
                 document.querySelector('.hidden-elements').appendChild(video);
-                videoSizeRatio = video.clientWidth / video.clientHeight;
+                videoSizeRatio = video.videoWidth / video.videoHeight;
 			    videoWidth = parseInt(getComputedStyle(video).width).toFixed();
 			    videoHeight = videoWidth / videoSizeRatio;
-
-                video.style.display = 'none';
 
                 resolve(video);
             }, false);

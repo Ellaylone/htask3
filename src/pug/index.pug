@@ -2,9 +2,10 @@ doctype html
 html(lang="en")
     head
         title= 'htask3'
+        meta(name='viewport' content='width=device-width, initial-scale=1')
         link(href='css/main.css' rel='stylesheet')
     body
-        .content
+        .content.container-fluid
             .links
                 header.links__header
                     h1 Киноглушитель
@@ -32,7 +33,7 @@ html(lang="en")
                             value='https://raw.githubusercontent.com/shri-msk-2016/dz-multimedia/master/subs.srt'
                             )
                         
-                        button(
+                        button.btn.btn-default(
                         class='links-form__button links-form__submit'
                         ) Заглушить
             
@@ -42,6 +43,9 @@ html(lang="en")
                 section
                     canvas.player__canvas
             .overlay.hidden
+            .alert.hidden
+                .close
+                .alert__content
             .loader-wrap.hidden
                 .loader Loading...
         script(src='js/main.js' type='text/javascript')

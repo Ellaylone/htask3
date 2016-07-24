@@ -29,14 +29,12 @@ let path = {
         js: 'src/js/',
         img: 'src/img/*.*',
         css: 'src/pcss/**/*.*',
-        fonts: 'src/fonts/*.*'
     },
     build: {
         html: 'build/',
         js: 'build/js/',
         img: 'build/img',
         css: 'build/css/',
-        fonts: 'build/fonts'
     }
 };
 
@@ -110,12 +108,6 @@ gulp.task('css:build', ['css:clean'], () => {
         .pipe(reload({stream: true}));
 });
 
-gulp.task('fonts:build', ['fonts:clean'], () => {
-    return gulp.src(path.src.fonts) 
-        .pipe(gulp.dest(path.build.fonts))
-        .pipe(reload({stream: true}));
-});
-
 //NOTE clear tasks
 gulp.task('html:clean', () => {
     return gulp.src(path.build.html + '*.html', {read: false})
@@ -137,17 +129,11 @@ gulp.task('css:clean', () => {
         .pipe(clean());
 });
 
-gulp.task('fonts:clean', () => {
-    return gulp.src(path.build.fonts, {read: false})
-        .pipe(clean());
-});
-
 gulp.task('build', [
     'html:build',
     'js:build',
     'img:build',
     'css:build',
-    'fonts:build'
 ]);
 
 gulp.task('webserver', () => {

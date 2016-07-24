@@ -10,6 +10,7 @@ const linksForm = document.querySelector('.links-form'),
       playerEl = document.querySelector('.player'),
       submitEl = document.querySelector('.links-form__submit'),
 
+      linksFormInputs = document.querySelectorAll('.links-form__input'),
       videoInput = document.querySelector('.links-form__video'),
       audioInput = document.querySelector('.links-form__audio'),
       subInput = document.querySelector('.links-form__sub');
@@ -106,6 +107,18 @@ function canvasStartState () {
     let ctx = canvas.getContext('2d');
     drawBackground(canvasBgColor);
     drawCenterPlayButton(canvasControlsColor);
+}
+
+function toggleOverlay () {
+    
+}
+
+function showAlert (msg) {
+    
+}
+
+function hideAlert () {
+    
 }
 
 function toggleLoader () {
