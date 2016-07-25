@@ -7,7 +7,6 @@ function parseSrt (text) {
     let temp = text.split('\n\n');
 
     let result = temp.map((el) => {
-
         let res = {};
         let subtitle = el.split('\n');
 
@@ -38,10 +37,17 @@ function parseSrt (text) {
         subtitle.splice(0, 2);
         res.content = subtitle;
 
-        return res;
+        return new Subtitle(res);
     });
 
     return result;
+}
+
+function Subtitle(data) {
+    this.startTime = data.startTime;
+    this.endTime = data.endTime;
+    this.content = data.content;
+    this.timeLength = data.timeLength;
 }
 
 function showSub (sub) {

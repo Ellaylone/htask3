@@ -23,18 +23,39 @@ function _onLinksFormSubmit (e) {
         Promise.all([
             createVideo(videoInput.value),
             createAudio(audioInput.value),
-            fetch(subInput.value)
+            createSub(subInput.value)
         ]).then((res) => {
             initCanvas();
             showPlayer();
+
+            subtitles = parseSrt(res[2]);
+
             toggleLoader();
         }).catch((err) => {
             toggleLoader();
-            console.log(err);
         });
     } else {
         toggleLoader();
     }
+}
+
+function createSub (src) {
+    return new Promise((resolve, reject) => {
+        try {
+            let subReq = new XMLHttpRequest();
+
+            subReq.addEventListener('readystatechange', (e) => {
+                if (subReq.readyState === 4 && subReq.status === 200) {
+                    resolve(subReq.responseText);
+                }
+            });
+
+            subReq.open('GET', src, false);
+            subReq.send();
+        } catch (e) {
+            reject(e);
+        }
+    });
 }
 
 function createVideo (src) {
