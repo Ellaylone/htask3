@@ -78,6 +78,25 @@ body {
     z-index: -1;
 }
 
+.alert {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    border-radius: 5px;
+    padding: 20px 50px;
+    width: 100%;
+    max-width: 400px;
+    border: 1px solid grey;
+}
+
+.close {
+    position: absolute;
+    top: -3px;
+    right: 3px;
+}
+
 .loader-wrap {
     position: absolute;
     left: 50%;

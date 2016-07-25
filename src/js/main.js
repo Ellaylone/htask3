@@ -36,9 +36,11 @@ let isSubtitleShown = false,
 let ctx = canvas.getContext('2d');
 let loopId;
 
-let loaderStatus = false,
-    overlayEl = document.querySelector('.overlay'),
-    loaderWrapEl = document.querySelector('.loader-wrap');
+let loaderStatus = false;
+    
+let loader = new Modal(document.querySelector('.loader-wrap'));
+let overlay = new Modal(document.querySelector('.overlay'));
+let modalAlert = new ModalAlert(document.querySelector('.alert'));
 
 let corsProxy = 'http://cors.io/?u=';
 
@@ -109,29 +111,45 @@ function canvasStartState () {
     drawCenterPlayButton(canvasControlsColor);
 }
 
-function toggleOverlay () {
-    
+function Modal (el) {
+    this.element = el;
+    this.status = false
 }
 
-function showAlert (msg) {
-    
+Modal.prototype.hide = function () {
+    this.element.classList.add('hidden');
+    this.status = false;
 }
 
-function hideAlert () {
-    
+Modal.prototype.show = function () {
+    this.element.classList.remove('hidden');
+    this.status = true;
 }
 
-function toggleLoader () {
-    switch (loaderStatus) {
-    case true:
-        loaderStatus = false;
-        overlayEl.classList.add('hidden');
-        loaderWrapEl.classList.add('hidden');
-        break;
-    default:
-        loaderStatus = true;
-        overlayEl.classList.remove('hidden');
-        loaderWrapEl.classList.remove('hidden');
-        break;
+Modal.prototype.toggle = function () {
+    this.element.classList.toggle('hidden');
+    if(this.element.classList.contains('hidden')) {
+        this.status = false;
+    } else {
+        this.status = true;
     }
+}
+
+function ModalAlert (el) {
+    Modal.apply(this, arguments);
+    this.contentEl = this.element.querySelector('.alert__content');
+    this.closeEl = this.element.querySelector('.close');
+
+    this.closeEl.addEventListener('click', (e) => {
+        console.log(this);
+    }, false);
+}
+
+ModalAlert.prototype.show = function (content) {
+    this.setContent(content);
+    Modal.prototype.show.apply(this, arguments);
+}
+
+ModalAlert.prototype.setContent = function (content) {
+    this.contentEl.innerHTML = content;
 }

@@ -9,7 +9,10 @@ function _onInputFocus (e) {
 
 function _onLinksFormSubmit (e) {
     e.preventDefault();
-    toggleLoader();
+
+    overlay.show();
+    loader.show();
+
     let inputs = document.querySelectorAll('.links-form__input');
     let validation = true;
 
@@ -30,12 +33,15 @@ function _onLinksFormSubmit (e) {
 
             subtitles = parseSrt(res[2]);
 
-            toggleLoader();
+            loader.hide();
+            overlay.hide();
         }).catch((err) => {
-            toggleLoader();
+            loader.hide();
+            modalAlert.show(`<h4>Error:</h4>${err}`);
         });
     } else {
-        toggleLoader();
+        loader.hide();
+        overlay.hide();
     }
 }
 

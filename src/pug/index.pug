@@ -44,7 +44,8 @@ html(lang="en")
                     canvas.player__canvas
             .overlay.hidden
             .alert.hidden
-                .close
+                .close(type='button' aria-label='Close')
+                    span(aria-hidden='true') &times;
                 .alert__content
             .loader-wrap.hidden
                 .loader Loading...
