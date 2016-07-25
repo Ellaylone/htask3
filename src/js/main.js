@@ -1,3 +1,48 @@
+function Modal (el) {
+    this.element = el;
+    this.status = false
+}
+
+Modal.prototype.hide = function () {
+    this.element.classList.add('hidden');
+    this.status = false;
+}
+
+Modal.prototype.show = function () {
+    this.element.classList.remove('hidden');
+    this.status = true;
+}
+
+Modal.prototype.toggle = function () {
+    this.element.classList.toggle('hidden');
+    if(this.element.classList.contains('hidden')) {
+        this.status = false;
+    } else {
+        this.status = true;
+    }
+}
+
+function ModalAlert (el) {
+    Modal.apply(this, arguments);
+    this.contentEl = this.element.querySelector('.alert__content');
+    this.closeEl = this.element.querySelector('.close');
+
+    this.closeEl.addEventListener('click', this.hide.bind(this), false);
+}
+
+ModalAlert.prototype = Object.create(Modal.prototype);
+ModalAlert.prototype.constructor = ModalAlert;
+
+ModalAlert.prototype.show = function (content) {
+    this.setContent(content);
+    Modal.prototype.show.apply(this, arguments);
+}
+
+ModalAlert.prototype.setContent = function (content) {
+    this.contentEl.innerHTML = content;
+}
+
+
 // main
 const canvasBgColor = '#000',
       canvasControlsColor = '#fff',
@@ -41,6 +86,12 @@ let loaderStatus = false;
 let loader = new Modal(document.querySelector('.loader-wrap'));
 let overlay = new Modal(document.querySelector('.overlay'));
 let modalAlert = new ModalAlert(document.querySelector('.alert'));
+overlay.element.addEventListener('click', (e) => {
+    if(modalAlert.status){
+        modalAlert.hide();
+        overlay.hide();
+    }
+}, false);
 
 let corsProxy = 'http://cors.io/?u=';
 
@@ -109,47 +160,4 @@ function canvasStartState () {
     let ctx = canvas.getContext('2d');
     drawBackground(canvasBgColor);
     drawCenterPlayButton(canvasControlsColor);
-}
-
-function Modal (el) {
-    this.element = el;
-    this.status = false
-}
-
-Modal.prototype.hide = function () {
-    this.element.classList.add('hidden');
-    this.status = false;
-}
-
-Modal.prototype.show = function () {
-    this.element.classList.remove('hidden');
-    this.status = true;
-}
-
-Modal.prototype.toggle = function () {
-    this.element.classList.toggle('hidden');
-    if(this.element.classList.contains('hidden')) {
-        this.status = false;
-    } else {
-        this.status = true;
-    }
-}
-
-function ModalAlert (el) {
-    Modal.apply(this, arguments);
-    this.contentEl = this.element.querySelector('.alert__content');
-    this.closeEl = this.element.querySelector('.close');
-
-    this.closeEl.addEventListener('click', (e) => {
-        console.log(this);
-    }, false);
-}
-
-ModalAlert.prototype.show = function (content) {
-    this.setContent(content);
-    Modal.prototype.show.apply(this, arguments);
-}
-
-ModalAlert.prototype.setContent = function (content) {
-    this.contentEl.innerHTML = content;
 }
