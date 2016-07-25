@@ -46,7 +46,7 @@ function createVideo (src) {
 
             video.src = corsProxy + src;
             video.defaultMuted = true;
-            video.classList.add('player__video');
+            video.style.visibility = 'hidden';
 
             video.addEventListener('play', startDrawLoop, false);
 
@@ -68,10 +68,12 @@ function createVideo (src) {
             }, false);
 
             video.addEventListener('loadeddata', (e) => {
-                document.querySelector('.hidden-elements').appendChild(video);
+                document.querySelector('body').appendChild(video);
+
                 videoSizeRatio = video.videoWidth / video.videoHeight;
 			    videoWidth = parseInt(getComputedStyle(video).width).toFixed();
 			    videoHeight = videoWidth / videoSizeRatio;
+                video.classList.add('player__video');
 
                 resolve(video);
             }, false);
