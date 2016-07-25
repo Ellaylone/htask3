@@ -112,7 +112,7 @@ function stopDrawLoop () {
 
 function drawLoop () {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(video, 0, 0, video.width, video.height);
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
     
     let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     let imageDataFiltered = grayAndGrain(imageData);

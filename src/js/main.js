@@ -1,3 +1,15 @@
+window.addEventListener('resize', (e) => {
+    if(loopId){
+        video.pause();
+        audio.pause();
+        canvasResize();
+        video.play();
+        audio.play();
+    } else {
+        initCanvas();
+    }
+}, false);
+
 function Modal (el) {
     this.element = el;
     this.status = false
@@ -101,7 +113,6 @@ function showPlayer () {
 }
 
 function initCanvas () {
-    canvas = document.querySelector('.player__canvas');
     canvasStartState();
 
     canvas.addEventListener('click', (e) => {
@@ -154,10 +165,29 @@ function createPauseElement () {
     }];
 }
 
+function canvasResize () {
+    let canvasWidth, canvasHeight;
+    if(window.screen.width < window.screen.height) {
+        if(window.screen.width > videoWidth) {
+            canvasWidth = videoWidth;
+        } else {
+            canvasWidth = window.screen.width;
+        }
+        canvasHeight = canvasWidth / videoSizeRatio;
+    } else {
+        if(window.screen.height > videoHeight) {
+            canvasHeight = videoHeight;
+        } else {
+            canvasHeight = window.screen.height;
+        }
+        canvasWidth = canvasHeight * videoSizeRatio;
+    }
+    canvas.width = canvasWidth;
+    canvas.height = canvasHeight;
+}
+
 function canvasStartState () {
-    video.width = canvas.width = video.offsetWidth;
-    video.height = canvas.height = video.offsetHeight;
-    let ctx = canvas.getContext('2d');
+    canvasResize();
     drawBackground(canvasBgColor);
     drawCenterPlayButton(canvasControlsColor);
 }
