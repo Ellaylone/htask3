@@ -1,13 +1,8 @@
 window.addEventListener('resize', (e) => {
-    if(loopId){
-        video.pause();
-        audio.pause();
-        canvasResize();
-        video.play();
-        audio.play();
-    } else {
-        initCanvas();
+    if(loopId) {
+        onCanvasClick('pause');
     }
+    canvasStartState();
 }, false);
 
 function Modal (el) {
@@ -118,31 +113,39 @@ function initCanvas () {
     canvas.addEventListener('click', (e) => {
         let clickedX = e.pageX - e.target.offsetLeft;
         let clickedY = e.pageY - e.target.offsetTop;
+        
         controlElements.some((el) => {
             if (clickedX < el.right && clickedX > el.left && clickedY > el.top && clickedY < el.bottom) {
-                if(el.type == 'pause'){
-                    if(!isSubtitleShown){
-                        video.pause();
-                        stopDrawLoop();
-                        drawCenterPlayButton(canvasControlsColor);
-                    } else {
-                        stopSubTimeout();
-                    }
-                    audio.pause();
-                    controlElements = [];
-                    createStartElement();
-                } else {
-                    if(!isSubtitleShown) {
-                        video.play();
-                    } else {
-                        startSubTimeout();
-                    }
-                    audio.play();
-                    createPauseElement();   
-                }
+                onCanvasClick(el.type);
+
             }
         });
     }, false);
+}
+
+function onCanvasClick (elType) {
+    if(elType == 'start'){
+        if(!isSubtitleShown) {
+            video.play();
+        } else {
+            drawSub(subtitles[subtitleIndex]);
+            startSubTimeout();
+        }
+        audio.play();
+        createPauseElement();        
+    } else {
+        if(!isSubtitleShown){
+            video.pause();
+            stopDrawLoop();
+            drawCenterPlayButton(canvasControlsColor);
+        } else {
+            drawSub(subtitles[subtitleIndex]);
+            stopSubTimeout();
+        }
+        audio.pause();
+        controlElements = [];
+        createStartElement();
+    }
 }
 
 function createStartElement () {

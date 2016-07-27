@@ -73,6 +73,12 @@ body {
     align-self: flex-end;
 }
 
+.player {
+    max-width: 100%;
+    max-height: 100%;
+    overflow: hidden;
+}
+
 .player__video {
     position: absolute;
     z-index: -1;

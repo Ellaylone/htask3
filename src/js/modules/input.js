@@ -101,6 +101,7 @@ function createVideo (src) {
 			    videoWidth = parseInt(getComputedStyle(video).width).toFixed();
 			    videoHeight = videoWidth / videoSizeRatio;
                 video.classList.add('player__video');
+                video.style.display = 'none';
 
                 resolve(video);
             }, false);
