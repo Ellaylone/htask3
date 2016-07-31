@@ -1,10 +1,3 @@
-window.addEventListener('load', (e) => {
-    setTimeout(() => {
-        loader.hide();
-        overlay.hide();
-    }, 2000);
-});
-
 window.addEventListener('resize', (e) => {
     if(loopId) {
         onCanvasClick('pause');

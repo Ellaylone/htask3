@@ -1,3 +1,12 @@
+mixin formInput(label, name, className, placeholder)
+    label.links-form__label=label
+        input(
+        type='text'
+        name=name
+        class=className
+        value=placeholder
+        )
+
 doctype html
 html(lang="en")
     head
@@ -11,42 +20,21 @@ html(lang="en")
                     h1 Киноглушитель
                 section.links__wrap
                     form(class='links-form')
-                        label.links-form__label Видео:
-                            input(
-                            type='text'
-                            name='video'
-                            class='links-form__input links-form__video'
-                            value='https://cache-default04d.cdn.yandex.net/kp.cdn.yandex.net/502838/kinopoisk.ru-Sherlock-284167.mp4'
-                            )
-                        label.links-form__label Аудио:
-                            input(
-                            type='text'
-                            name='audio'
-                            class='links-form__input links-form__audio'
-                            value='https://upload.wikimedia.org/wikipedia/commons/2/2c/The_Entertainer_-_1902_-_By_Scott_Joplin.ogg'
-                            )
-                        label.links-form__label Субтитры:
-                            input(
-                            type='text'
-                            name='sub'
-                            class='links-form__input links-form__sub'
-                            value='https://raw.githubusercontent.com/shri-msk-2016/dz-multimedia/master/subs.srt'
-                            )
-                        
+                        +formInput('Видео:', 'video', 'links-form__input links-form__video', 'https://cache-default04d.cdn.yandex.net/kp.cdn.yandex.net/502838/kinopoisk.ru-Sherlock-284167.mp4')
+                        +formInput('Аудио:', 'audio', 'links-form__input links-form__audio', 'https://upload.wikimedia.org/wikipedia/commons/2/2c/The_Entertainer_-_1902_-_By_Scott_Joplin.ogg')
+                        +formInput('Субтитры:', 'sub', 'links-form__input links-form__sub', 'https://raw.githubusercontent.com/shri-msk-2016/dz-multimedia/master/subs.srt')
                         button.btn.btn-default(
                         class='links-form__button links-form__submit'
                         ) Заглушить
-            
             .player.hidden
                 section.hidden-elements
-                    
                 section
                     canvas.player__canvas
-            .overlay
+            .overlay.hidden
             .alert.hidden
                 .close(type='button' aria-label='Close')
                     span(aria-hidden='true') &times;
                 .alert__content
-            .loader-wrap
+            .loader-wrap.hidden
                 .loader Loading...
         script(src='js/main.js' type='text/javascript')
